@@ -1,13 +1,17 @@
 # fsr-diagnose
 
-Encrypted release of `fsr_diagnose.sh`, a read-only FortiSOAR appliance troubleshooter (with optional targeted fixes). The script is AES-256 encrypted; the key is shared separately, never stored here.
+FortiSOAR appliance troubleshooter. The script is published encrypted; get the key from whoever sent you here.
 
-## Install and run (on the FortiSOAR appliance, as csadmin)
+## Run (on the FortiSOAR box, as csadmin)
 
 ```bash
-curl -fsSLO https://github.com/ftnt-dspille/fsr-diagnose/releases/latest/download/fsr_diagnose.sh.enc && \
-  openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -md sha256 -in fsr_diagnose.sh.enc -out fsr_diagnose.sh && \
-  sudo env bash fsr_diagnose.sh
+curl -fsSL https://github.com/ftnt-dspille/fsr-diagnose/releases/latest/download/run.sh | sudo env bash
 ```
 
-`openssl` asks for the key. Add `--fix` to apply no-downtime fixes, `--fix --yes` to also apply service-affecting ones.
+It asks for the key, then runs. Options go after `-s --`:
+
+```bash
+curl -fsSL https://github.com/ftnt-dspille/fsr-diagnose/releases/latest/download/run.sh | sudo env bash -s -- --fix
+```
+
+`--fix` applies no-downtime fixes; `--fix --yes` also applies ones that restart a service. Re-run later with `sudo env bash ~/fsr_diagnose.sh`.
